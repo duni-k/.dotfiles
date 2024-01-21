@@ -1,8 +1,0 @@
-[[language]]
-name = "python"
-roots = ["pyproject.toml"]
-auto-format = true
-formatter = { command = "black", args = ["-", "-q"] }
-
-[[language]]
-name = "rust"

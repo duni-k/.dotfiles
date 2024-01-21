@@ -1,21 +1,33 @@
 theme = "catppuccin_latte"
 
 [editor]
-rulers = [80, 120]
 line-number = "relative"
+cursorline = true
+true-color = true
+color-modes = true
+auto-pairs = true
 
 [editor.cursor-shape]
 insert = "bar"
 normal = "block"
 select = "underline"
 
+[keys.normal]
+ret = "add_newline_below"
+D = ["goto_line_start", "extend_to_line_bounds", "delete_selection"]
+C-k = "kill_to_line_end"
+H = "goto_first_nonwhitespace"
+L = "goto_line_end"
+
+[keys.normal.space]
+"." = "file_picker_in_current_buffer_directory"
+
 [editor.statusline]
-left = ["diagnostics", "file-name"]
-center = ["mode"]
-right = ["selections", "position", "file-encoding", "file-line-ending", "file-type", "spinner"]
-separator = "::"
+left = ["mode", "diagnostics", "file-name"]
+center = ["spinner"]
+right = ["selections", "position", "file-encoding", "file-line-ending", "file-type"]
+separator = "|"
 mode.normal = "N"
 mode.insert = "I"
 mode.select = "S"
 
-[keys.normal]
