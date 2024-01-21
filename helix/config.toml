@@ -1,0 +1,21 @@
+theme = "catppuccin_latte"
+
+[editor]
+rulers = [80, 120]
+line-number = "relative"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.statusline]
+left = ["diagnostics", "file-name"]
+center = ["mode"]
+right = ["selections", "position", "file-encoding", "file-line-ending", "file-type", "spinner"]
+separator = "::"
+mode.normal = "N"
+mode.insert = "I"
+mode.select = "S"
+
+[keys.normal]
