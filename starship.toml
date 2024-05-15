@@ -1,0 +1,5 @@
+add_newline = false
+continuation_prompt = '▶▶ '
+
+[character] # The name of the module we are configuring is 'character'
+success_symbol = '[λ:](bold white)'
