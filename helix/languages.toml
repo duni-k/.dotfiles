@@ -2,7 +2,64 @@
 name = "python"
 roots = ["pyproject.toml"]
 auto-format = true
-formatter = { command = "black", args = ["-", "-q"] }
+formatter = { command = 'ruff', args = ["format", "--stdin"] }
+language-servers = [
+	{name="pylsp"},
+	{name="ruff-lsp"},
+]
+[language-server.pylsp.plugins]
+pyflakes = {enabled = false}
+mccabe = {enabled = false}
+pyls_isort = {enabled = false}
+pycodestyle = {enabled = false, maxLineLength = 88}
+pydocstyle = {enabled = false}
+autopep8 = {enabled = false}
+yapf = {enabled = false}
+flake8 = {enabled = false}
+pylint = {enabled = false}
+ruff = {enabled = true, extendSelect = ["I"]}
+mypy = {enabled = true, live_mode = true, strict = true}
+[language-server.ruff-lsp]
+command = "ruff-lsp"
+[language-server.ruff-lsp.config]
+documentFormatting = true 
+settings.run = "onSave"
 
 [[language]]
 name = "rust"
+
+[[language]]
+name = "go"
+
+[[language]]
+name = "latex"
+language-servers = ["texlab"] # ltex provides some autocompletion/grammar suggestions
+indent = { tab-width = 4, unit = " " }
+[language-server.texlab]
+command = "texlab"
+[language-server.texlab.config]
+auxDirectory = "output"
+[language-server.texlab.config.chktex]
+onOpenAndSave = true
+onEdit = true
+[language-server.texlab.config.build]
+forwardSearchAfter = true
+onSave = true
+executable = "tectonic"
+args = [
+	"-X",
+	"compile",
+	"%f",
+	"--synctex",
+	"--keep-logs",
+	"--keep-intermediates",
+	"--outdir=output",
+	"-Zshell-escape",
+]
+
+[[language]]
+name = "json"
+formatter = { command = 'dprint', args = ["fmt", "--stdin", "json"] }
+[[language]]
+name = "markdown"
+formatter = { command = 'dprint', args = ["fmt", "--stdin", "markdown"] }

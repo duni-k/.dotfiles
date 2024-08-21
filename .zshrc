@@ -1,184 +1,57 @@
-# Start configuration added by Zim install {{{
-#
-# User configuration sourced by interactive shells
-#
-export LC_ALL="en_US.UTF-8"
-export PATH=$PATH:/usr/local/bin
-export GOPATH=$HOME/.go
-export EDITOR=helix
-export BROWSER=firefox
-export ALTERNATE_EDITOR=""
-export MPD_HOST="localhost"
-export MPD_PORT="6600"
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export XMODIFIERS=@im=fcitx
-export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+export EDITOR="helix"
 
-# pyenv setup
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-# -----------------
-# Zsh configuration
-# -----------------
+GOPATH=$HOME/code/go
+export GOPATH=$GOPATH
+export PATH="$GOPATH/bin:$HOME/.config/emacs/bin:$PATH"
 
-#
-# History
-#
+export LS_COLORS="$(vivid generate catppuccin-latte)"
 
-# Remove older command from the history if a duplicate is to be added.
-setopt HIST_IGNORE_ALL_DUPS
-
-#
-# Input/output
-#
-
-# Set editor default keymap to emacs (`-e`) or vi (`-v`)
-bindkey -v
-
-# Prompt for spelling correction of commands.
-#setopt CORRECT
-
-# Customize spelling correction prompt.
-#SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
-
-# Remove path separator from WORDCHARS.
-WORDCHARS=${WORDCHARS//[\/]}
-
-# -----------------
-# Zim configuration
-# -----------------
-
-# Use degit instead of git as the default tool to install and update modules.
-#zstyle ':zim:zmodule' use 'degit'
-
-# --------------------
-# Module configuration
-# --------------------
-
-#
-# git
-#
-
-# Set a custom prefix for the generated aliases. The default prefix is 'G'.
-#zstyle ':zim:git' aliases-prefix 'g'
-
-#
-# input
-#
-
-# Append `../` to your input for each `.` you type after an initial `..`
-#zstyle ':zim:input' double-dot-expand yes
-
-#
-# termtitle
-#
-
-# Set a custom terminal title format using prompt expansion escape sequences.
-# See http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#Simple-Prompt-Escapes
-# If none is provided, the default '%n@%m: %~' is used.
-#zstyle ':zim:termtitle' format '%1~'
-
-#
-# zsh-autosuggestions
-#
-
-# Disable automatic widget re-binding on each precmd. This can be set when
-# zsh-users/zsh-autosuggestions is the last module in your ~/.zimrc.
-ZSH_AUTOSUGGEST_MANUAL_REBIND=1
-
-# Customize the style that the suggestions are shown with.
-# See https://github.com/zsh-users/zsh-autosuggestions/blob/master/README.md#suggestion-highlight-style
-#ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
-
-#
-# zsh-syntax-highlighting
-#
-
-# Set what highlighters will be used.
-# See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
-
-# Customize the main highlighter styles.
-# See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md#how-to-tweak-it
-#typeset -A ZSH_HIGHLIGHT_STYLES
-#ZSH_HIGHLIGHT_STYLES[comment]='fg=242'
-
-# ------------------
-# Initialize modules
-# ------------------
-
-ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
-# Download zimfw plugin manager if missing.
-if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
-  if (( ${+commands[curl]} )); then
-    curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
-        https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
-  else
-    mkdir -p ${ZIM_HOME} && wget -nv -O ${ZIM_HOME}/zimfw.zsh \
-        https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+# 'ls' after every 'cd'
+if ! (( $chpwd_functions[(I)chpwd_cdls] )); then
+  chpwd_functions+=(chpwd_cdls)
+fi
+function chpwd_cdls() {
+  if [[ -o interactive ]]; then
+    emulate -L zsh
+    eval ${CD_LS_COMMAND:-ls}
   fi
-fi
-# Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated.
-if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
-  source ${ZIM_HOME}/zimfw.zsh init -q
-fi
-# Initialize modules.
-source ${ZIM_HOME}/init.zsh
+}
 
-# ------------------------------
-# Post-init module configuration
-# ------------------------------
-
-#
-# zsh-history-substring-search
-#
-
-zmodload -F zsh/terminfo +p:terminfo
-# Bind ^[[A/^[[B manually so up/down works both before and after zle-line-init
-for key ('^[[A' '^P' ${terminfo[kcuu1]}) bindkey ${key} history-substring-search-up
-for key ('^[[B' '^N' ${terminfo[kcud1]}) bindkey ${key} history-substring-search-down
-for key ('k') bindkey -M vicmd ${key} history-substring-search-up
-for key ('j') bindkey -M vicmd ${key} history-substring-search-down
-unset key
-# }}} End configuration added by Zim install
-
-DISABLE_AUTO_TITLE="true"
-ENABLE_CORRECTION="true"
-shopt -s dotglob
-
-alias lg='lazygit'
-alias cp="cp -i"
-alias zshconf="helix ~/.zshrc"
 alias hx="helix"
-alias cr="cargo run"
-alias output="e output.txt"
+alias ls="exa"
+alias lg="lazygit"
+alias scrabbler="zellij --layout scrabbler"
+alias zljr="zellij --layout rust"
+alias zshconf="$EDITOR ~/.zshrc"
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias ~="cd ~"
 
-booli () {
-    docker-compose run "$1" /bin/bash
+function pyenv() {
+	source ~/code/Python/$1/bin/activate
 }
 
-conf () {
-    helix ~/.config/"$1"
+function projects() {
+    cd $(find ~/projects/* -type d | fzf)
 }
 
-mkcd () {
-    mkdir "$1" && cd "$1"
+function config() {
+    helix ~/.config/$1
 }
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/dnk/.local/bin/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/dnk/.local/bin/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/dnk/.local/bin/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/dnk/.local/bin/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
+function yy() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
 
+# fish-like autocompletion
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+# vi-mode
+set -o vi
+# nice featured but fast prompt
+eval "$(starship init zsh)"

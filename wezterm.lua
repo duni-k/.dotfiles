@@ -2,7 +2,7 @@ local wezterm = require 'wezterm'
 
 local config = wezterm.config_builder()
 
-config.color_scheme = 'Gruvbox dark, medium (base16)'
+config.color_scheme = 'Catppuccin Latte'
 config.font = wezterm.font 'Fira Code'
 -- stylistic font and ligature alternatives for fira code
 config.harfbuzz_features = { 'cv01', 'cv02', 'cv31', 'cv30', 'ss02', 'cv19', 'cv22', 'cv23', 'ss03', 'cv04' }
