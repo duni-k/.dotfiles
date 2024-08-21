@@ -6,6 +6,7 @@ cp -r ~/.config/wofi/ ~/.dotfiles/
 cp -r ~/.config/dunst/ ~/.dotfiles/
 cp -r ~/.config/waybar/ ~/.dotfiles/
 cp -r ~/.zsh/ ~/.dotfiles/
+cp -r ~/.config/zellij ~/.dotfiles/
 cp ~/.zshrc ~/.dotfiles/
 
 echo "DONE"
