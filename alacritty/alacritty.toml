@@ -1,6 +1,3 @@
-import = [
-  "~/.config/alacritty/catppuccin-latte.toml"
-]
 
 [window]
 padding = { x = 15, y = 5 }
@@ -28,3 +25,8 @@ style = "Italic"
 [font.bold]
 family = "Monaspace Krypton"
 style = "Bold"
+
+[general]
+import = [
+  "~/.config/alacritty/catppuccin-latte.toml"
+]

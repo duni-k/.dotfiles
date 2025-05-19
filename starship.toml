@@ -5,6 +5,8 @@ $directory\
 $git_branch$git_status$git_state\
 $rust\
 $python\
+$ruby\
+$nodejs\
 [▓▒░](fg:lavender)\
 $jobs\
 \n$character"""
@@ -49,13 +51,23 @@ style = "bg:lavender"
 format = '[[($all_status$ahead_behind )](fg:base bg:lavender)]($style)'
 
 [rust]
-symbol = "🦀"
+symbol = " "
 style = "bg:teal fg:base"
 format = '[[ $symbol ($version) ]($style)]($style)'
 
 [python]
-symbol = "🐍"
+symbol = " "
 style = "bg:teal fg:base"
+format = '[[ $symbol ($version) ]($style)]($style)'
+
+[nodejs]
+symbol = "󰎙 "
+style = "bg:teal fg:base"
+format = '[[ $symbol ($version) ]($style)]($style)'
+
+[ruby]
+symbol = " "
+style = "bg:red fg:base"
 format = '[[ $symbol ($version) ]($style)]($style)'
 
 [palettes.catppuccin_latte]
